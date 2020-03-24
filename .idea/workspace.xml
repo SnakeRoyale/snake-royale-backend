@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ae31e5a-a3a7-4854-83c1-bc6c0fd381b1" name="Default Changelist" comment="" />
+    <list default="true" id="9ae31e5a-a3a7-4854-83c1-bc6c0fd381b1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/apiResponse.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/createId.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/snake.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/snake.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/snake.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webserver/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/server.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +29,10 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="D:\Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1X1VBwwosu6LhRjbH8WcQG2KAJc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -24,24 +42,26 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gitlab.com/sellation/sellation-backend" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\pkg" />
-      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend" />
-      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\app\snake-royal\api\snake" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\app\snake-royal\commonapi" />
       <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\app\snake-royal\api\game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sven\GolandProjects\snake-royale-backend\common" />
+      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\pkg" />
+      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend" />
+      <recent name="C:\devsbb\Code\gospace\src\github.com\SnakeRoyale\snake-royale-backend\internal\app\snake-royal\api\snake" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.Start Server">
@@ -104,11 +124,12 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="491" y="48" key="#Start_Server/0.0.1536.824@0.0.1536.824" timestamp="1583835193010" />
-    <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583835489281">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="372" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584436643560">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-496" y="-2044" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/-868.-2160.2560.1400@-868.-2160.2560.1400" timestamp="1582185462996" />
     <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1583835489281" />
+    <state x="372" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584436643560" />
     <state x="503" y="161" key="EnvironmentVariablesDialog" timestamp="1583835190783">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -117,26 +138,35 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="166" y="171" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1582619009350" />
-    <state width="1493" height="239" key="GridCell.Tab.0.bottom" timestamp="1583912934572">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1433" height="401" key="GridCell.Tab.0.bottom" timestamp="1584456366886">
+      <screen x="-3840" y="0" width="2560" height="1400" />
     </state>
     <state width="1493" height="239" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1583912934572" />
-    <state width="1493" height="239" key="GridCell.Tab.0.center" timestamp="1583912934571">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1433" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-3840.0.2560.1400@-3840.0.2560.1400" timestamp="1584456366886" />
+    <state width="1433" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584441497319" />
+    <state width="1433" height="401" key="GridCell.Tab.0.center" timestamp="1584456366885">
+      <screen x="-3840" y="0" width="2560" height="1400" />
     </state>
     <state width="1493" height="239" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1583912934571" />
-    <state width="1493" height="239" key="GridCell.Tab.0.left" timestamp="1583912934571">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1433" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-3840.0.2560.1400@-3840.0.2560.1400" timestamp="1584456366885" />
+    <state width="1433" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584441497319" />
+    <state width="1433" height="401" key="GridCell.Tab.0.left" timestamp="1584456366885">
+      <screen x="-3840" y="0" width="2560" height="1400" />
     </state>
     <state width="1493" height="239" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1583912934571" />
-    <state width="1493" height="239" key="GridCell.Tab.0.right" timestamp="1583912934572">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1433" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-3840.0.2560.1400@-3840.0.2560.1400" timestamp="1584456366885" />
+    <state width="1433" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584441497319" />
+    <state width="1433" height="401" key="GridCell.Tab.0.right" timestamp="1584456366885">
+      <screen x="-3840" y="0" width="2560" height="1400" />
     </state>
     <state width="1493" height="239" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1583912934572" />
-    <state x="277" y="55" key="SettingsEditor" timestamp="1580895068362">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1433" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-3840.0.2560.1400@-3840.0.2560.1400" timestamp="1584456366885" />
+    <state width="1433" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584441497319" />
+    <state x="462" y="93" key="SettingsEditor" timestamp="1584436653543">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1580895068362" />
+    <state x="462" y="93" key="SettingsEditor/0.0.2560.1400/-3840.0.2560.1400@0.0.2560.1400" timestamp="1584436653543" />
     <state x="0" y="0" width="761" height="824" key="find.popup" timestamp="1580908998444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -1,4 +1,4 @@
-package webserver
+package config
 
 import (
 	"github.com/gin-contrib/cors"

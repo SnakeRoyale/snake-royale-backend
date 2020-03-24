@@ -1,9 +1,11 @@
 package service
 
 import (
+	"github.com/SnakeRoyale/snake-royale-backend/common"
 	"github.com/SnakeRoyale/snake-royale-backend/model"
 	"github.com/SnakeRoyale/snake-royale-backend/repository"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"net/http"
 )
 
@@ -21,11 +23,24 @@ func (s GameService) RegisterRoutes(ginEngine *gin.Engine) {
 }
 
 func (s GameService) authenticate(c *gin.Context) {
-// send pos
-// get other player
-// spawn fruit
-// change color
-// loading screen
+	var connection model.PostConnection
+	errBinding := c.ShouldBindWith(&connection, binding.JSON)
+
+	if errBinding != nil {
+		common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while parsing JSON body")
+		return
+	} else if connection.Token != "" {
+		if err := s.gameRepository.StopConnection(connection.Token); err != nil {
+			common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while deleting old token")
+			return
+		}
+	}
+	token := s.gameRepository.Authenticate(connection.Name)
+
+	c.JSON(http.StatusCreated, model.Connection{
+		Name:  connection.Name,
+		Token: token,
+	})
 }
 
 func (s GameService) checkGameStatus(c *gin.Context) {
@@ -37,7 +52,21 @@ func (s GameService) checkGameStatus(c *gin.Context) {
 }
 
 func (s GameService) leaveGame(c *gin.Context) {
+	var connection model.PostConnection
+	errBinding := c.ShouldBindWith(&connection, binding.JSON)
 
+	if errBinding != nil {
+		common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while parsing JSON body")
+	} else if connection.Token == "" {
+		common.WriteFailApiResponse(c, http.StatusBadRequest, "missing token")
+	} else {
+		if err := s.gameRepository.StopConnection(connection.Token); err != nil {
+			common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while deleting token")
+			return
+		} else {
+			common.WriteOKApiResponse(c, http.StatusOK, "successfully deleted" + connection.Name)
+		}
+	}
 }
 
 func NewGame(gameRepository *repository.GameRepository) *GameService {

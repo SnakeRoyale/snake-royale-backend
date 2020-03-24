@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/SnakeRoyale/snake-royale-backend/repository"
 	"github.com/SnakeRoyale/snake-royale-backend/service"
-	"github.com/SnakeRoyale/snake-royale-backend/webserver"
+	"github.com/SnakeRoyale/snake-royale-backend/config"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func Register() {
 	// api for frontend
 	gameApi := service.NewGame(gameRepository)
 
-	ginEngine := webserver.New(gameApi,)
+	ginEngine := config.New(gameApi,)
 
 	if err := ginEngine.Run(); err != nil {
 		fmt.Println("Failed to start webservice: ", err)
