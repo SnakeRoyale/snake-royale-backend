@@ -1,71 +1,127 @@
 package service
 
 import (
-	"github.com/SnakeRoyale/snake-royale-backend/common"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/SnakeRoyale/snake-royale-backend/model"
 	"github.com/SnakeRoyale/snake-royale-backend/repository"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"net/http"
+	socketio "github.com/googollee/go-socket.io"
+	"time"
 )
 
 type GameService struct {
 	gameRepository *repository.GameRepository
+	isGameRunning  bool
+	server         *socketio.Server
+	gameInterval chan bool
 }
 
-func (s GameService) RegisterRoutes(ginEngine *gin.Engine) {
-
-	privateGroup := ginEngine.Group("/api")
-
-	privateGroup.POST("/login", s.authenticate)
-	privateGroup.GET("game/status", s.checkGameStatus)
-	privateGroup.DELETE("game", s.leaveGame)
-}
-
-func (s GameService) authenticate(c *gin.Context) {
-	var connection model.PostConnection
-	errBinding := c.ShouldBindWith(&connection, binding.JSON)
-
-	if errBinding != nil {
-		common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while parsing JSON body")
-		return
-	} else if connection.Token != "" {
-		if err := s.gameRepository.StopConnection(connection.Token); err != nil {
-			common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while deleting old token")
-			return
+func (s GameService) RegisterEvents(server *socketio.Server) {
+	s.server = server
+	server.OnEvent("/login", "login", func(socket socketio.Conn, msg string) {
+		conn, err := s.authenticate(msg)
+		if err != nil {
+			socket.Emit("Error in login: " + err.Error())
 		}
-	}
-	token := s.gameRepository.Authenticate(connection.Name)
+		socket.Emit("Logged in", conn)
+	})
 
-	c.JSON(http.StatusCreated, model.Connection{
-		Name:  connection.Name,
-		Token: token,
+	server.OnEvent("/game/status", "checkGameStatus", func(socket socketio.Conn, msg string) {
+		json, err := s.checkGameStatus()
+		if err != nil {
+			socket.Emit("Error in checkGameStatus: " + err.Error())
+		}
+		socket.Emit("Game Status", json)
+	})
+
+	server.OnEvent("/game/leave", "leaveGame", func(socket socketio.Conn, msg string) {
+		response, err := s.authenticate(msg)
+		if err != nil {
+			socket.Emit("Error in leaveGame: " + err.Error())
+		}
+		socket.Emit("Leave Game", response)
 	})
 }
 
-func (s GameService) checkGameStatus(c *gin.Context) {
-	c.JSON(http.StatusOK, model.StatusResponse{
+func (s GameService) authenticate(msg string) (string, error) {
+	data := model.PostConnection{}
+
+	if err := json.Unmarshal([]byte(msg), data); err != nil {
+		return "", err
+	} else if len(data.Name) <= 1 {
+		return "", errors.New("invalid name")
+	} else if data.Token != "" {
+		return "", errors.New("already authenticated")
+	}
+	byteArrayJson, err := json.Marshal(model.Connection{
+		Name:  data.Name,
+		Token: s.gameRepository.Authenticate(data.Name),
+	})
+	if err != nil {
+		return "", err
+	}
+	if !s.isGameRunning {
+		go s.startGame()
+	}
+	return string(byteArrayJson), err
+}
+
+func (s GameService) checkGameStatus() (string, error) {
+	byteArrayJson, err := json.Marshal(model.StatusResponse{
 		Status:      s.gameRepository.Status,
 		StatusCode:  s.gameRepository.StatusCode,
 		TimeToStart: s.gameRepository.TimeToStart,
 	})
+	if err != nil {
+		return "", err
+	}
+	return string(byteArrayJson), err
 }
 
-func (s GameService) leaveGame(c *gin.Context) {
-	var connection model.PostConnection
-	errBinding := c.ShouldBindWith(&connection, binding.JSON)
+func (s GameService) leaveGame(msg string) (string, error) {
+	data := model.PostConnection{}
 
-	if errBinding != nil {
-		common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while parsing JSON body")
-	} else if connection.Token == "" {
-		common.WriteFailApiResponse(c, http.StatusBadRequest, "missing token")
-	} else {
-		if err := s.gameRepository.StopConnection(connection.Token); err != nil {
-			common.WriteFailApiResponse(c, http.StatusBadRequest, "Error while deleting token")
-			return
-		} else {
-			common.WriteOKApiResponse(c, http.StatusOK, "successfully deleted" + connection.Name)
-		}
+	if err := json.Unmarshal([]byte(msg), data); err != nil {
+		return "", err
+	} else if data.Token == "" {
+		return "", errors.New("missing token")
+	}
+
+	if err := s.gameRepository.StopConnection(data.Token); err != nil {
+		return "", errors.New("error while deleting token")
+	}
+	return "successfully deleted" + data.Name, nil
+
+}
+
+func (s GameService) sendSnakes(msg string) (string, error) {
+	data := model.PostConnection{}
+
+	if err := json.Unmarshal([]byte(msg), data); err != nil {
+		return "", err
+	} else if data.Token == "" {
+		return "", errors.New("missing token")
+	}
+
+	if err := s.gameRepository.StopConnection(data.Token); err != nil {
+		return "", errors.New("error while deleting token")
+	}
+	return "successfully deleted" + data.Name, nil
+
+}
+
+func (s GameService) startGame() {
+	s.isGameRunning = true
+	s.gameInterval := s.setInterval(s.updateGame, 1000)
+	// TODO: Interval not starting
+}
+
+func (s GameService) updateGame() {
+	s.setInterval()
+	s.isGameRunning = true
+	for s.isGameRunning {
+
 	}
 }
 
@@ -73,4 +129,22 @@ func NewGame(gameRepository *repository.GameRepository) *GameService {
 	return &GameService{
 		gameRepository: gameRepository,
 	}
+}
+func (s GameService) setInterval(someFunc func(), milliseconds int) chan bool {
+	interval := time.Duration(milliseconds) * time.Millisecond
+	ticker := time.NewTicker(interval)
+	clear := make(chan bool)
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				go someFunc()
+			case <-clear:
+				ticker.Stop()
+				return
+			}
+		}
+	}()
+	return clear
+
 }
